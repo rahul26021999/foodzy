@@ -58,10 +58,15 @@ else
                     
                     if(move_uploaded_file($temp_name, $target_path)) 
                     {
-                        $sql = "Insert into users (firstname,lastname, email, password, phoneno,userImage) values ('$fname', '$lname', '$email', '$pass', '$mobile','$target_path');";
-                $result=mysqli_query($conn, $sql);
-                        header("Location: login.php?signup=success");  
-                        exit();
+                        $sql = "Insert into users (firstname,lastname, email, password, phoneno,userImage) values ('{$fname}', '{$lname}', '{$email}', '{$pass}', '{$mobile}','{$target_path}');";
+
+                        if (!mysqli_query($conn, $sql)) {
+                               echo "Error: " . $sql . "" . mysqli_error($conn);
+                        }
+                        else{
+                            header("Location: login.php?signup=success");  
+                            exit();
+                        }
                     }
                     else
                     {                
